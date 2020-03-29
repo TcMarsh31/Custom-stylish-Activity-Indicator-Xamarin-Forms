@@ -1,7 +1,154 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:d="http://xamarin.com/schemas/2014/forms/design" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="Custom_ActivityIndicator_SkiaSharp.MainPage">
-    <StackLayout>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" x:Class="Custom_ActivityIndicator_SkiaSharp.MainPage"
+             Title="Loaders">
+
+    <ScrollView VerticalScrollBarVisibility="Never" HorizontalScrollBarVisibility="Never" x:Name="Scroll">
+        <StackLayout>
         <!-- Place new controls here -->
-        <Label Text="Welcome to Xamarin.Forms!" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" />
-    </StackLayout>
+            <!-- outer grid-->
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <!-- inner grid this is the main content-->
+    <Grid Grid.Row="0" x:Name="MainContent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="230" x:Name="row1"></RowDefinition>
+            <RowDefinition Height="230" x:Name="row2"></RowDefinition>
+            <RowDefinition Height="230" x:Name="row3"></RowDefinition>
+            <RowDefinition Height="230" x:Name="row4"></RowDefinition>
+            <RowDefinition Height="230" x:Name="row5"></RowDefinition>
+            <RowDefinition Height="230" x:Name="row6"></RowDefinition>
+            <RowDefinition Height="230" x:Name="row7"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <!-- First loader-->
+        <ContentView Grid.Row="0" Grid.Column="0" x:Name="OneArcsContentView" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"> 
+        </ContentView>
+        <Frame Grid.Row="0" Grid.Column="0" HasShadow="True" Padding="0" Margin="0" HorizontalOptions="End" VerticalOptions="End">
+            <Frame.GestureRecognizers>
+                <TapGestureRecognizer Tapped="FirstLoaderFullScreen"></TapGestureRecognizer>
+            </Frame.GestureRecognizers>
+                <Image Source="icon.png" WidthRequest="40" HeightRequest="40"></Image>
+        </Frame>
+        <Frame Grid.Row="0" Grid.Column="0" HasShadow="True" Padding="0" Margin="0,0,50,0" HorizontalOptions="End" VerticalOptions="End">
+            <Frame.GestureRecognizers>
+                <TapGestureRecognizer Tapped="FirstLoaderPopup"></TapGestureRecognizer>
+            </Frame.GestureRecognizers>
+                <Image Source="icon2.png" WidthRequest="40" HeightRequest="40"></Image>
+        </Frame>
+
+        <!-- Second loader-->
+        <ContentView Grid.Row="1" Grid.Column="0" x:Name="TwoArcsContentView" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+        </ContentView>
+        <Frame Grid.Row="1" Grid.Column="0" HasShadow="True" Padding="0" Margin="0" HorizontalOptions="End" VerticalOptions="End">
+            <Frame.GestureRecognizers>
+                <TapGestureRecognizer Tapped="SecondLoaderFullScreen"></TapGestureRecognizer>
+            </Frame.GestureRecognizers>
+                <Image Source="icon.png" WidthRequest="40" HeightRequest="40"></Image>
+        </Frame>
+        <Frame Grid.Row="1" Grid.Column="0" HasShadow="True" Padding="0" Margin="0,0,50,0" HorizontalOptions="End" VerticalOptions="End">
+            <Frame.GestureRecognizers>
+                <TapGestureRecognizer Tapped="SecondLoaderPopup"></TapGestureRecognizer>
+            </Frame.GestureRecognizers>
+                <Image Source="icon2.png" WidthRequest="40" HeightRequest="40"></Image>
+        </Frame>
+
+        <!-- Third loader-->
+        <ContentView Grid.Row="2" Grid.Column="0" x:Name="ArcWithinArcContentView" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+            </ContentView>
+        <Frame Grid.Row="2" Grid.Column="0" HasShadow="True" Padding="0" Margin="0" HorizontalOptions="End" VerticalOptions="End">
+            <Frame.GestureRecognizers>
+                <TapGestureRecognizer Tapped="ThirdLoaderFullScreen"></TapGestureRecognizer>
+            </Frame.GestureRecognizers>
+            <Image Source="icon.png" WidthRequest="40" HeightRequest="40"></Image>
+        </Frame>
+        <Frame Grid.Row="2" Grid.Column="0" HasShadow="True" Padding="0" Margin="0,0,50,0" HorizontalOptions="End" VerticalOptions="End">
+            <Frame.GestureRecognizers>
+                <TapGestureRecognizer Tapped="ThirdLoaderPopup"></TapGestureRecognizer>
+            </Frame.GestureRecognizers>
+            <Image Source="icon2.png" WidthRequest="40" HeightRequest="40"></Image>
+        </Frame>
+
+        <!-- Fourth loader-->
+        <ContentView Grid.Row="3" Grid.Column="0" x:Name="TwoSeparateArcsContentView" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+        </ContentView>
+        <Frame Grid.Row="3" Grid.Column="0" HasShadow="True" Padding="0" Margin="0" HorizontalOptions="End" VerticalOptions="End">
+            <Frame.GestureRecognizers>
+                <TapGestureRecognizer Tapped="FourthLoaderFullScreen"></TapGestureRecognizer>
+            </Frame.GestureRecognizers>
+            <Image Source="icon.png" WidthRequest="40" HeightRequest="40"></Image>
+        </Frame>
+        <Frame Grid.Row="3" Grid.Column="0" HasShadow="True" Padding="0" Margin="0,0,50,0" HorizontalOptions="End" VerticalOptions="End">
+            <Frame.GestureRecognizers>
+                <TapGestureRecognizer Tapped="FourthLoaderPopup"></TapGestureRecognizer>
+            </Frame.GestureRecognizers>
+            <Image Source="icon2.png" WidthRequest="40" HeightRequest="40"></Image>
+        </Frame>
+
+        <!-- Fifth loader-->
+        <ContentView Grid.Row="4" Grid.Column="0" x:Name="FourArcsContentView" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+        </ContentView>
+        <Frame Grid.Row="4" Grid.Column="0" HasShadow="True" Padding="0" Margin="0" HorizontalOptions="End" VerticalOptions="End">
+            <Frame.GestureRecognizers>
+                <TapGestureRecognizer Tapped="FifthLoaderFullScreen"></TapGestureRecognizer>
+            </Frame.GestureRecognizers><Image Source="icon.png" WidthRequest="40" HeightRequest="40"></Image>
+        </Frame>
+        <Frame Grid.Row="4" Grid.Column="0" HasShadow="True" Padding="0" Margin="0,0,50,0" HorizontalOptions="End" VerticalOptions="End">
+            <Frame.GestureRecognizers>
+                <TapGestureRecognizer Tapped="FifthLoaderPopup"></TapGestureRecognizer>
+            </Frame.GestureRecognizers>
+            <Image Source="icon2.png" WidthRequest="40" HeightRequest="40"></Image>
+        </Frame>
+
+        <!-- Sixth loader-->
+        <ContentView Grid.Row="5" Grid.Column="0" x:Name="ThreeArcsContentView" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+        </ContentView>
+        <Frame Grid.Row="5" Grid.Column="0" HasShadow="True" Padding="0" Margin="0" HorizontalOptions="End" VerticalOptions="End">
+            <Frame.GestureRecognizers>
+                <TapGestureRecognizer Tapped="SixthLoaderFullScreen"></TapGestureRecognizer>
+            </Frame.GestureRecognizers>
+            <Image Source="icon.png" WidthRequest="40" HeightRequest="40"></Image>
+        </Frame>
+        <Frame Grid.Row="5" Grid.Column="0" HasShadow="True" Padding="0" Margin="0,0,50,0" HorizontalOptions="End" VerticalOptions="End">
+            <Frame.GestureRecognizers>
+                <TapGestureRecognizer Tapped="SixthLoaderPopup"></TapGestureRecognizer>
+            </Frame.GestureRecognizers>
+            <Image Source="icon2.png" WidthRequest="40" HeightRequest="40"></Image>
+        </Frame>
+
+        <!-- Sixth loader-->
+        <ContentView Grid.Row="6" Grid.Column="0" x:Name="ThreeArcsWithTwoInSamePositionContentView" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+        </ContentView>
+        <Frame Grid.Row="6" Grid.Column="0" HasShadow="True" Padding="0" Margin="0" HorizontalOptions="End" VerticalOptions="End">
+            <Frame.GestureRecognizers>
+                <TapGestureRecognizer Tapped="SeventhLoaderFullScreen"></TapGestureRecognizer>
+            </Frame.GestureRecognizers>
+            <Image Source="icon.png" WidthRequest="40" HeightRequest="40"></Image>
+        </Frame>
+        <Frame Grid.Row="6" Grid.Column="0" HasShadow="True" Padding="0" Margin="0,0,50,0" HorizontalOptions="End" VerticalOptions="End">
+            <Frame.GestureRecognizers>
+                <TapGestureRecognizer Tapped="SeventhLoaderPopup"></TapGestureRecognizer>
+            </Frame.GestureRecognizers>
+            <Image Source="icon2.png" WidthRequest="40" HeightRequest="40"></Image>
+        </Frame>
+    </Grid>
+
+        <!-- popup frame shares the same row as main content-->
+        <Frame CornerRadius="10" Padding="10" Margin="0" Grid.Row="0" x:Name="arcFrame" VerticalOptions="Center" HorizontalOptions="Center" HeightRequest="300" WidthRequest="300" IsVisible="false" BackgroundColor="White" HasShadow="True">
+            <ContentView x:Name="frameArcContentView" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"></ContentView>
+        </Frame>
+
+
+</Grid>
+        </StackLayout>
+    </ScrollView>
 </ContentPage>

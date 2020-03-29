@@ -1,8 +1,7 @@
-﻿using System;
-using System.ComponentModel;
-using System.Diagnostics;
-using SkiaSharp;
-using SkiaSharp.Views.Forms;
+﻿using System.ComponentModel;
+using System.Threading.Tasks;
+using Custom_ActivityIndicator_SkiaSharp.Loader;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace Custom_ActivityIndicator_SkiaSharp
@@ -12,148 +11,213 @@ namespace Custom_ActivityIndicator_SkiaSharp
     [DesignTimeVisible(false)]
     public partial class MainPage : ContentPage
     {
-        SKCanvasView canvasView; //canvasview variable surface we will be drawing
-        bool isAnimating;
-        Stopwatch stopwatch = new Stopwatch(); //stopwatch to start the timer to render the animation
-
-        float firstOvalStartAngle = 90; //outer arc start angle
-        float firstOvalSweepAngle = 100; //outer arcg sweep angle from the start angle position
-
-        float secondOvalStartAngle = 90; //middle arc start angle
-        float secondOvalSweepAngle = 90; //middle arc sweep angle from the start angle position
-
-        float thirdOvalStartAngle = 90; //inner arc start angle
-        float thirdOvalSweepAngle = 80; //inner arc sweep angle from the start angle postion
-
-
-        /// <summary>
-        /// outer arc paint style
-        /// defined the style as stroke
-        /// color of the stroke using hsl format * you can change the color code here*
-        /// width of the outer arc
-        /// </summary>
-        SKPaint firstArcPaint = new SKPaint
-        {
-            Style = SKPaintStyle.Stroke,
-
-            Color = SKColor.FromHsl(339, 66, 33),
-            StrokeWidth = 25,
-            IsAntialias = true
-
-        };
-
-        /// <summary>
-        /// middle arc paint style
-        /// defined the style as stroke
-        /// color of the stroke using hsl format * you can change the color code here*
-        /// width of the middle arc
-        /// </summary>
-        SKPaint secondArcPaint = new SKPaint
-        {
-            Style = SKPaintStyle.Stroke,
-
-            Color = SKColor.FromHsl(339, 67, 44),
-            StrokeWidth = 25,
-            IsAntialias = true
-
-        };
-
-        /// <summary>
-        /// inner arc paint style
-        /// defined the style as stroke
-        /// color of the stroke using hsl format * you can change the color code here*
-        /// width of the inner arc
-        /// </summary>
-        SKPaint thirdArcPaint = new SKPaint
-        {
-            Style = SKPaintStyle.Stroke,
-
-            Color = SKColor.FromHsl(339, 81, 55),
-            StrokeWidth = 25,
-            IsAntialias = true
-
-        };
-
         public MainPage()
         {
             InitializeComponent();
-            canvasView = new SKCanvasView(); //canvas surface initialized
-            canvasView.PaintSurface += OnCanvasViewPaintSurface; //this method will be trigered at the start of the app to draw in canvas surface
-            Content = canvasView; //set the canvas view to the content so it get displayed in the screen
-        }
 
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-            isAnimating = true; //make animation true so timer gets running every 20ms
-            stopwatch.Start(); //start the stop watch
-            Device.StartTimer(TimeSpan.FromMilliseconds(20), OnTimerTick); //timer has been set to every 20ms to trigger OnTimerTick method
-        }
+            //first loader
+            OneArc content1 = new OneArc();
+            OneArcsContentView.Content = content1;
 
-        protected override void OnDisappearing()
-        {
-            base.OnDisappearing();
-            stopwatch.Stop(); //stop the stop watch when page get disappearing from the navogation stack
-            isAnimating = false; //make animation stop
-        }
+            //second loader
+            TwoArcs content2 = new TwoArcs();
+            TwoArcsContentView.Content = content2;
 
-        bool OnTimerTick()
-        {
-            firstOvalStartAngle += 5; //outer arc start angle will be increased by 5 every 20ms
-            secondOvalStartAngle += 3; //middle arc start angle will be increased by 3 every 20ms
-            thirdOvalStartAngle += 2; //inner arc start angle will be increased by 2 every 20ms
-            canvasView.InvalidateSurface(); //redraw the surface with new values
+            //third loader
+            ArcWithinArc content3 = new ArcWithinArc();
+            ArcWithinArcContentView.Content = content3;
 
-            return isAnimating;
-        }
+            //fourth loader
+            TwoSepareteArcs content4 = new TwoSepareteArcs();
+            TwoSeparateArcsContentView.Content = content4;
 
-        void OnCanvasViewPaintSurface(object sender, SKPaintSurfaceEventArgs args)
-        {
-            SKImageInfo info = args.Info;
-            SKSurface surface = args.Surface;
-            SKCanvas canvas = surface.Canvas;
+            //fifth loader
+            FourArcs content5 = new FourArcs();
+            FourArcsContentView.Content = content5;
 
-            canvas.Clear();
+            //sixth loader
+            ThreeArcs content6 = new ThreeArcs();
+            ThreeArcsContentView.Content = content6;
 
-            /*
-             * 500 is the diameter of the outer arc
-             * each inner arc from the outer arc will get reduced by 50
-             *you can change the value according to make the arc smaller or bigger
-             * */
+            //seventh loader
+            ThreeArcsWithTwoInSamePosition content7 = new ThreeArcsWithTwoInSamePosition();
+            ThreeArcsWithTwoInSamePositionContentView.Content = content7;
 
-            float left, right;
-            float top, bottom;
-            right = left = (info.Width - 500) / 2; //get the left and right postions to support all the devices
-            top = bottom = (info.Height - 500) / 2;//get the top and bottom postions to support all the devices
-
-            //first Arc
-            SKRect rect = new SKRect(left, top, info.Width - right, info.Height - bottom);
-
-            using (SKPath path = new SKPath())
+            if(Device.iOS == Device.RuntimePlatform)
             {
-                path.AddArc(rect, firstOvalStartAngle, firstOvalSweepAngle);
-                canvas.DrawPath(path, firstArcPaint);
+                row1.Height = 300;
+                row2.Height = 300;
+                row3.Height = 300;
+                row4.Height = 300;
+                row5.Height = 300;
+                row6.Height = 300;
+                row7.Height = 300;
             }
 
-            //second Arc
-            SKRect rect2 = new SKRect(left + 50, top + 50, (info.Width - right) - 50, (info.Height - bottom) - 50);
-
-            using (SKPath path = new SKPath())
-            {
-                path.AddArc(rect2, secondOvalStartAngle, secondOvalSweepAngle);
-                canvas.DrawPath(path, secondArcPaint);
-            }
-
-            //third Arc
-            SKRect rect3 = new SKRect(left + 100, top + 100, (info.Width - right) - 100, (info.Height - bottom) - 100);
-
-            using (SKPath path = new SKPath())
-            {
-                path.AddArc(rect3, thirdOvalStartAngle, thirdOvalSweepAngle);
-                canvas.DrawPath(path, thirdArcPaint);
-            }
-
+            arcFrame.TranslateTo(0, 0) ;
 
         }
+            
+        #region first loader tap functions
+            //first loader tapped functions
+            async void FirstLoaderFullScreen(System.Object sender, System.EventArgs e)
+            {
+                await Navigation.PushAsync(new SecondPage());
+            }
+
+            async void FirstLoaderPopup(System.Object sender, System.EventArgs e)
+            {
+                arcFrame.IsVisible = true; //visible the frame
+                Scroll.ScrollToAsync(arcFrame, ScrollToPosition.Center, true); //scrolls so that the frame is at the center of the list
+                MainContent.Opacity = 0.3; //set the main grid opacity to low
+                MainContent.InputTransparent = true; //set the main grid not touchable
+                OneArc page = new OneArc();
+                frameArcContentView.Content = page;
+                await Task.Delay(5000); //delay for 5 secs
+                arcFrame.IsVisible = false; //hide the frame
+                MainContent.Opacity = 1; //make back the opacity of main grid
+                MainContent.InputTransparent = false; //make main grid touchable
+            }
+            #endregion
+
+        #region Second loader tap functions
+            //second loader tapped functions
+            async void SecondLoaderFullScreen(System.Object sender, System.EventArgs e)
+            {
+                await Navigation.PushAsync(new SecondPage());
+            }
+
+            async void SecondLoaderPopup(System.Object sender, System.EventArgs e)
+            {
+                arcFrame.IsVisible = true; //visible the frame
+                Scroll.ScrollToAsync(arcFrame, ScrollToPosition.Center, true); //scrolls so that the frame is at the center of the list 
+                MainContent.Opacity = 0.3; //set the main grid opacity to low
+                MainContent.InputTransparent = true; //set the main grid not touchable
+                TwoArcs page = new TwoArcs();
+                frameArcContentView.Content = page;
+                await Task.Delay(5000); //delay for 5 secs
+                arcFrame.IsVisible = false; //hide the frame
+                MainContent.Opacity = 1; //make back the opacity of main grid
+                MainContent.InputTransparent = false; //make main grid touchable
+            }
+
+            #endregion
+
+        #region Third loader tap functions
+            //second loader tapped functions
+            async void ThirdLoaderFullScreen(System.Object sender, System.EventArgs e)
+            {
+                await Navigation.PushAsync(new ArcWithinArcPage());
+            }
+
+            async void ThirdLoaderPopup(System.Object sender, System.EventArgs e)
+            {
+                arcFrame.IsVisible = true; //visible the frame
+                Scroll.ScrollToAsync(arcFrame, ScrollToPosition.Center, true); //scrolls so that the frame is at the center of the list
+                MainContent.Opacity = 0.3; //set the main grid opacity to low
+                MainContent.InputTransparent = true; //set the main grid not touchable
+                ArcWithinArc page = new ArcWithinArc();
+                frameArcContentView.Content = page;
+                await Task.Delay(5000); //delay for 5 secs
+                arcFrame.IsVisible = false; //hide the frame
+                MainContent.Opacity = 1; //make back the opacity of main grid
+                MainContent.InputTransparent = false; //make main grid touchable
+            }
+
+        #endregion
+
+        #region Fourth loader tap functions
+        //second loader tapped functions
+        async void FourthLoaderFullScreen(System.Object sender, System.EventArgs e)
+        {
+            await Navigation.PushAsync(new TwoSeparateArcsPage());
+        }
+
+        async void FourthLoaderPopup(System.Object sender, System.EventArgs e)
+        {
+            arcFrame.IsVisible = true; //visible the frame
+            Scroll.ScrollToAsync(arcFrame, ScrollToPosition.Center, true); //scrolls so that the frame is at the center of the list
+            MainContent.Opacity = 0.3; //set the main grid opacity to low
+            MainContent.InputTransparent = true; //set the main grid not touchable
+            TwoSepareteArcs page = new TwoSepareteArcs();
+            frameArcContentView.Content = page;
+            await Task.Delay(5000); //delay for 5 secs
+            arcFrame.IsVisible = false; //hide the frame
+            MainContent.Opacity = 1; //make back the opacity of main grid
+            MainContent.InputTransparent = false; //make main grid touchable
+        }
+
+        #endregion
+
+        #region Fifth loader tap functions
+        //second loader tapped functions
+        async void FifthLoaderFullScreen(System.Object sender, System.EventArgs e)
+        {
+            await Navigation.PushAsync(new FourArcsPage());
+        }
+
+        async void FifthLoaderPopup(System.Object sender, System.EventArgs e)
+        {
+            arcFrame.IsVisible = true; //visible the frame
+            Scroll.ScrollToAsync(arcFrame, ScrollToPosition.Center, true); //scrolls so that the frame is at the center of the list
+            MainContent.Opacity = 0.3; //set the main grid opacity to low
+            MainContent.InputTransparent = true; //set the main grid not touchable
+            FourArcs page = new FourArcs();
+            frameArcContentView.Content = page;
+            await Task.Delay(5000); //delay for 5 secs
+            arcFrame.IsVisible = false; //hide the frame
+            MainContent.Opacity = 1; //make back the opacity of main grid
+            MainContent.InputTransparent = false; //make main grid touchable
+        }
+
+        #endregion
+
+        #region Sixth loader tap functions
+        //second loader tapped functions
+        async void SixthLoaderFullScreen(System.Object sender, System.EventArgs e)
+        {
+            await Navigation.PushAsync(new FourthPage());
+        }
+
+        async void SixthLoaderPopup(System.Object sender, System.EventArgs e)
+        {
+            arcFrame.IsVisible = true; //visible the frame
+            Scroll.ScrollToAsync(arcFrame, ScrollToPosition.Center, true); //scrolls so that the frame is at the center of the list
+            MainContent.Opacity = 0.3; //set the main grid opacity to low
+            MainContent.InputTransparent = true; //set the main grid not touchable
+            ThreeArcs page = new ThreeArcs();
+            frameArcContentView.Content = page;
+            await Task.Delay(5000); //delay for 5 secs
+            arcFrame.IsVisible = false; //hide the frame
+            MainContent.Opacity = 1; //make back the opacity of main grid
+            MainContent.InputTransparent = false; //make main grid touchable
+        }
+
+        #endregion
+
+        #region Seventh loader tap functions
+        //second loader tapped functions
+        async void SeventhLoaderFullScreen(System.Object sender, System.EventArgs e)
+        {
+            await Navigation.PushAsync(new ThreeArcsWithTwoSamePositionPage());
+        }
+
+        async void SeventhLoaderPopup(System.Object sender, System.EventArgs e)
+        {
+            arcFrame.IsVisible = true; //visible the frame
+            Scroll.ScrollToAsync(arcFrame, ScrollToPosition.Center, true); //scrolls so that the frame is at the center of the list
+            MainContent.Opacity = 0.3; //set the main grid opacity to low
+            MainContent.InputTransparent = true; //set the main grid not touchable
+            ThreeArcsWithTwoInSamePosition page = new ThreeArcsWithTwoInSamePosition();
+            frameArcContentView.Content = page;
+            await Task.Delay(5000); //delay for 5 secs
+            arcFrame.IsVisible = false; //hide the frame
+            MainContent.Opacity = 1; //make back the opacity of main grid
+            MainContent.InputTransparent = false; //make main grid touchable
+        }
+
+        #endregion
     }
+
 }
+

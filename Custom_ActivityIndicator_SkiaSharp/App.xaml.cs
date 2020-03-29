@@ -9,20 +9,8 @@ namespace Custom_ActivityIndicator_SkiaSharp
         public App()
         {
             InitializeComponent();
-
-            MainPage = new MainPage();
-        }
-
-        protected override void OnStart()
-        {
-        }
-
-        protected override void OnSleep()
-        {
-        }
-
-        protected override void OnResume()
-        {
+            //MainPage = new ThreeArcsWithTwoSamePositionPage();
+            MainPage = new NavigationPage(new MainPage());
         }
     }
 }

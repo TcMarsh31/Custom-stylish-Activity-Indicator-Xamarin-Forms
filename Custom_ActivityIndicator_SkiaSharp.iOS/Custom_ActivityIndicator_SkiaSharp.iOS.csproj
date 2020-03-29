@@ -132,4 +132,8 @@
       <Name>Custom_ActivityIndicator_SkiaSharp</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\icon.png" />
+    <BundleResource Include="Resources\icon2.png" />
+  </ItemGroup>
 </Project>
